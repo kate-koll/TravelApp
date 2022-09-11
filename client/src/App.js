@@ -41,8 +41,7 @@ function App() {
     paddingLeft: "10px",
     paddingTop: "18px",
     paddingBottom: "19px",
-    borderRadius: "20px"
-    
+    borderRadius: "20px",
   };
   let inactiveStyle = {
     textDecoration: "none",
@@ -58,7 +57,7 @@ function App() {
             sx={{ bgcolor: "neutral.light", height: 40, borderRadius: "5px" }}
           >
             <Toolbar
-              style={{minHeight: "10px", alignItems: "center" }}
+              style={{ minHeight: "10px", alignItems: "center" }}
               sx={{ height: 40 }}
             >
               <IconButton
@@ -122,6 +121,16 @@ function App() {
                 >
                   BLOG
                 </NavLink>
+              </Typography>{" "}
+              <Typography variant="h5">
+                <NavLink
+                  style={({ isActive }) =>
+                    isActive ? activeStyle : inactiveStyle
+                  }
+                  to="/visited"
+                >
+                  VISITED
+                </NavLink>
               </Typography>
               <Typography variant="h5">
                 <NavLink
@@ -133,17 +142,6 @@ function App() {
                   BUCKET
                 </NavLink>
               </Typography>
-              <Typography variant="h5">
-                <NavLink
-                  style={({ isActive }) =>
-                    isActive ? activeStyle : inactiveStyle
-                  }
-                  to="/visited"
-                >
-                  VISITED
-                </NavLink>
-              </Typography>
-
               <Typography variant="h5">
                 <NavLink
                   style={({ isActive }) =>

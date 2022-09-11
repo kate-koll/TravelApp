@@ -38,7 +38,7 @@ const VisitedDetailsCard = (props) => {
     const card = (
   <React.Fragment>
     <ThemeProvider theme={theme}>
-      <CardContent>
+      <CardContent sx={{display: "flex", flexDirection: 'column', flexWrap: "wrap", justifyContent: "start"}}>
         <Typography variant="h3" color="primary.main" gutterBottom>
           {name}
         </Typography>
@@ -49,16 +49,16 @@ const VisitedDetailsCard = (props) => {
           {notes}
         </Typography>
       </CardContent>
-      <CardActions style={{ justifyContent: "center" }}>
-        <Button color="info" size="small">Go to blog</Button>
+      <CardActions style={{marginTop: 'auto', alignSelf: 'center'}}>
+        <Button  color="info" size="small">Go to blog</Button>
       </CardActions>
     </ThemeProvider>
   </React.Fragment>
 );
   return (
     <>
-      <Box wrap="wrap" display="flex" direction="row" sx={{ maxWidth: 450 }}>
-        <Card sx={{ margin: 3 }} variant="outlined">
+      <Box  display="flex" sx={{ width: "450px", justifyContent: "center"}}>
+        <Card sx={{ margin: 3, wrap:"wrap", display:"flex", flexDirection: 'column', width: "402px"}} variant="elevation" elevation={4}>
           {card}
         </Card>
       </Box>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import axios from "axios";
 import Box from "@mui/material/Box";
@@ -12,13 +12,16 @@ import TextField from "@mui/material/TextField";
 import Switch from "@mui/material/Switch";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Button from "@mui/material/Button";
-import { NavLink } from "react-router-dom";
+import CircularProgress from '@mui/material/CircularProgress'
 
 const LocationForm = (props) => {
   const { view } = props; //new or edit
 
   let locationId = useLocation().state.locationId
-  let origin = useLocation().state.view; //Visited or Bucket
+  let origin = useLocation().state.view; //Visited || Bucket
+  const navigate = useNavigate();
+
+
   let boolVisited = false;
   if (origin === "Visited") boolVisited = true;
 
@@ -29,7 +32,7 @@ const LocationForm = (props) => {
   const [visited, setVisited] = useState(boolVisited);
   const [month, setMonth] = useState("January");
   const [year, setYear] = useState("");
-  const [prio, setPrio] = useState(0);
+  const [prio, setPrio] = useState("");
   const [notes, setNotes] = useState("")
 
   const [locationObject, setLocationObject] = useState({});
@@ -60,16 +63,12 @@ const LocationForm = (props) => {
         setYear(res.data.documents.year);
         setPrio(res.data.documents.bucketPriority);
         setNotes(res.data.documents.notes?res.data.documents.notes:"")
-        console.log(res.data.documents.country)
-        
+        setIsLoaded(true);
       },
       (er) => {
         setError(er);
         console.log(error)
       },
-      () => {
-        setIsLoaded(true);
-      }
     )
       
   }  
@@ -128,18 +127,16 @@ const LocationForm = (props) => {
     event.preventDefault();
     setPrepared(true);
 
-    window.location = `http://localhost:3000/management/`;
   }
 
   useEffect(() => {
+    setIsLoaded(false);
     const saveLocation = () => {
-        console.log(locationObject);
         //saving new one
         if(view==="new"){
       axios
         .post(`http://localhost:5000/locations/save-location`, locationObject)
         .then(function (response) {
-          console.log(response);
         })
         .catch(function (error) {
           console.log(error);
@@ -149,25 +146,38 @@ const LocationForm = (props) => {
         else if (view==='edit') {
             axios.post(`http://localhost:5000/locations/edit-location/${locationId}`, locationObject)
             .then(function (response) {
-                console.log(response);
               })
               .catch(function (error) {
                 console.log(error);
               });
         }
-
+        navigate("/management", {state: {view: origin}}, {replace: true})
 
     };
     if (prepared) saveLocation();
     setPrepared(false);
+    setIsLoaded(true);
   }, [prepared]);
 
   const handleReset = () => {
-    alert("reset");
+    setContinent("Europe");
+    setCountry("");
+    setCity("");
+    setName("");
+    setVisited(boolVisited);
+    setYear("");
+    setMonth("January");
+    setPrio("");
+    setNotes("");
+  };
+  const handleCancel = () => {
+    navigate("/management", {state: {view: origin}}, {replace: true})
+    //alert('cancel')
   };
 
   return (
     <>
+    {!isLoaded&&(<CircularProgress/>)}
       {/* action="/management" */}
       <form data-rel="back" onSubmit={handleSubmit} onReset={handleReset}>
         <Box sx={{ flexGrow: 1, maxWidth: "100%" }}>
@@ -314,9 +324,8 @@ const LocationForm = (props) => {
               <FormControl sx={{ margin: 1, width: "30%" }}>
                 <TextField
                   name="prio" //input atribute name required for submit and post
-                  helperText="0 not prioritized; -1 visited"
+                  helperText="1-10; empty = not prioritized"
                   inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
-                  required
                   label="Prio"
                   value={prio}
                   onChange={handlePrio}
@@ -326,10 +335,13 @@ const LocationForm = (props) => {
           </div>
 
         </Box>
-        <Button variant="contained" color="error" type="reset">
+        <Button sx={{margin: 3}} variant="contained" color="error" onClick={handleCancel}>
+          Cancel
+        </Button>
+        <Button sx={{margin: 3}} variant="contained" color="warning" type="reset">
           Reset
         </Button>
-        <Button variant="contained" color="primary" type="submit">
+        <Button sx={{margin: 3}} variant="contained" color="primary" type="submit">
           Submit
         </Button>
       </form>

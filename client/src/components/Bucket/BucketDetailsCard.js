@@ -1,9 +1,7 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
@@ -33,12 +31,12 @@ const theme = createTheme({
 
 
 const BucketDetailsCard = (props) => {
-    const {name, month, year, country, city, notes, prio} = props
+    const {name, country, city, notes, prio} = props
 
     const card = (
   <React.Fragment>
     <ThemeProvider theme={theme}>
-      <CardContent>
+    <CardContent sx={{display: "flex", flexDirection: 'column', flexWrap: "wrap", justifyContent: "start"}}>
         <Typography variant="h3" color="primary.main" gutterBottom>
           {name}
         </Typography>
@@ -57,8 +55,8 @@ const BucketDetailsCard = (props) => {
 );
   return (
     <>
-      <Box wrap="wrap" display="flex" direction="row" sx={{ maxWidth: 450 }}>
-        <Card sx={{ margin: 3 }} variant="outlined">
+      <Box  display="flex" sx={{ width: "450px" }}>
+        <Card sx={{ margin: 3, wrap:"wrap", display:"flex", flexDirection: 'column', width: "450px"}} variant="elevation" elevation={4}>
           {card}
         </Card>
       </Box>

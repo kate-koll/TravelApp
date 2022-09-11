@@ -1,4 +1,6 @@
-import React, {useState} from "react";
+import React, { useState, useRef } from "react";
+import { useLocation } from "react-router-dom";
+
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
@@ -34,10 +36,33 @@ export default function Management() {
     },
   });
 
-  const [view, setView] = useState("Visited");
+  const [view, setView] = useState();
+  const localView = useRef();
+
+  let origin = useLocation();
+  if (!view) {
+    //if localView empty
+    if (origin.state) {
+      try {
+        if (origin.state.view) {
+          //view exists in state: set to that value
+          localView.current = origin.state.view;
+          setView(origin.state.view);
+        }
+      } catch (e) {
+        console.log("error: " + e);
+      }
+    }
+    //localView empty and no view in origin: set default "Visited"
+    else {
+      localView.current = "Visited";
+      setView("Visited");
+    }
+  }
 
   const handleChange = (event, newValue) => {
     setView(newValue);
+    localView.current = newValue;
   };
 
   return (
@@ -75,9 +100,9 @@ export default function Management() {
               </Box>
             </TabContext>
           </Box>
-          {view === "Visited" && (<VisitedTab/>)}
-          {view === "Bucket" && (<BucketTab/>)}
-          {view === "Blog" && (<BlogTab/>)}
+          {view === "Visited" && <VisitedTab />}
+          {view === "Bucket" && <BucketTab />}
+          {view === "Blog" && <BlogTab />}
         </Box>
       </ThemeProvider>
     </div>

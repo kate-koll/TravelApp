@@ -16,7 +16,6 @@ deleteLocation.post("/delete-location/:id", (req, res) => {
   // } = req.body;
 
   modelLocation.findByIdAndRemove(req.params.id, (err, doc)=>{
-    console.log(req.params.id)
     if(err) {
       return res.json({
         msg: "couldn't delete"

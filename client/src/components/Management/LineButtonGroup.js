@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React,{useState} from "react";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
@@ -9,32 +9,56 @@ import PostAddIcon from "@mui/icons-material/PostAdd";
 import {  NavLink } from "react-router-dom";
 
 import axios from "axios";
+import ConfirmAlert from "./ConfirmAlert";
 
 const LineButtonGroup = (props) => {
-  const {type, locationId , handler} = props;
+  const {type, locationId , handler} = props; //type Visited || Bucket
 
+const [alertOpen, setAlertOpen] = useState(false)
+const [action, setAction] = useState("");
+
+
+const openAlert = () => {
+  setAlertOpen(true)
+}
+const closeAlert = () => {
+  setAlertOpen(false)
+}
 
   const handleEditClick = () => {
 
   };
   
   const handleDeleteClick = (event) => {
+    setAction('delete');
     axios.post(`http://localhost:5000/locations/delete-location/${locationId}`);
     handler(); //to change list loading state to rerender the list
 
   };
   const handleCheckClick = () => {
-
       axios.post(`http://localhost:5000/locations/edit-location/${locationId}`, {visited:true})
 
         .catch(function (error) {
           console.log(error);
         });
         handler(); //to change list loading state to rerender the list
-  
+
   };
+  const handleCheck = () => {
+    setAction('check');
+    openAlert();
+  }
+
+  const handleDelete = () => {
+    setAction('delete');
+    openAlert();
+  }
+
   const handlePostClick = () => {
     alert("post");
+  };
+  const handleTestClick = () => {
+    openAlert();
   };
 
   return (
@@ -54,7 +78,7 @@ const LineButtonGroup = (props) => {
         </IconButton></NavLink>
         
         <IconButton
-          onClick={handleDeleteClick}
+          onClick={handleDelete}
           aria-label="delete"
           color="error"
         >
@@ -62,7 +86,7 @@ const LineButtonGroup = (props) => {
         </IconButton>
         {type === "Bucket" && (
           <IconButton
-            onClick={handleCheckClick}
+            onClick={handleCheck}
             aria-label="check"
             color="primary"
           >
@@ -79,6 +103,7 @@ const LineButtonGroup = (props) => {
           </IconButton>
         )}
       </ButtonGroup>
+      {alertOpen && (<ConfirmAlert action={action} alertOpen={alertOpen} closeAlert={closeAlert} handleCheckClick={handleCheckClick} handleDeleteClick={handleDeleteClick}/>)}
     </Box>
   );
 };

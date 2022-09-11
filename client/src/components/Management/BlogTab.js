@@ -4,7 +4,8 @@ import TextList from './TextList'
 
 const BlogTab = () => {
   return (
-    <TextList view={"Blog"} />
+    <h2>blog to be</h2>
+    // <TextList view={"Blog"} />
   )
 }
 
