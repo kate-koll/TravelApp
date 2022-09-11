@@ -325,7 +325,7 @@ const LocationForm = (props) => {
                 <TextField
                   name="prio" //input atribute name required for submit and post
                   helperText="1-10; empty = not prioritized"
-                  inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+                  inputProps={{ inputMode: "numeric", pattern: "[1-9]|10{1}" }}
                   label="Prio"
                   value={prio}
                   onChange={handlePrio}
