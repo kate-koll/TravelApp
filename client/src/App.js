@@ -9,6 +9,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import LoginIcon from "@mui/icons-material/Login";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
+
 function App() {
   const theme = createTheme({
     palette: {
@@ -22,6 +23,12 @@ function App() {
         main: "#aeea00",
         light: "#e4ff54",
         dark: "#79b700",
+        contrastText: "#000", //black
+      },
+      info: {
+        main: "#0288d1",
+        light: "#03a9f4",
+        dark: "#01579b",
         contrastText: "#000", //black
       },
       neutral: {

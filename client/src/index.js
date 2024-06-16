@@ -10,8 +10,12 @@ import Visited from "./routes/Visited";
 import Login from "./routes/Login";
 import Management from "./routes/Management";
 import Form from "./components/Management/LocationForm";
+import BlogForm from "./components/Management/BlogForm";
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+const serverPort= process.env.REACT_APP_PORT
+console.log("serverport" + serverPort);
 root.render(
   <React.StrictMode>
     <BrowserRouter>
@@ -25,6 +29,8 @@ root.render(
           <Route path="management" element={<Management />}/>
           <Route path="management/add-new" element={<Form view = {"new"}/>}></Route>
           <Route path="management/edit-location" element={<Form view = {"edit"}/>}></Route>
+          <Route path="management/add-new-blog" element={<BlogForm view = {"new"}/>}></Route>
+          <Route path="management/edit-blog" element={<BlogForm view = {"edit"}/>}></Route>
         </Route>
       </Routes>
     </BrowserRouter>

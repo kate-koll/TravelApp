@@ -12,13 +12,14 @@ export default function TextList(props) {
   const { view } = props; //view = Visited || Bucket || Blog(blog todo or delete from this comment)
 
   const [documents, setDocuments] = useState([]);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false); //for performing rerender after some line button action
   const [error, setError] = useState(null);
+  
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); //for displaying spinner if not ready
   const numberOfRows = useRef();
 
-  const handleLoading = () => {
+  const handleLoading = () => { //for performing rerender after some line button action
     setIsLoaded(!isLoaded);
   };
 
@@ -34,9 +35,6 @@ export default function TextList(props) {
           },
           (er) => {
             setError(er);
-          },
-          () => {
-            setIsLoaded(true);
           }
         );
     } else if (view === "Bucket") {
@@ -49,9 +47,6 @@ export default function TextList(props) {
           },
           (er) => {
             setError(er);
-          },
-          () => {
-            setIsLoaded(true);
           }
         );
     }
@@ -59,7 +54,6 @@ export default function TextList(props) {
 
   function displayList() {
     numberOfRows.current = Math.ceil(documents.length / 3);
-    let printedString = ``
     return documents.map((location) => {
       return (
         <ListItem key={location._id}>

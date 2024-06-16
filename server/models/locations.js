@@ -44,15 +44,15 @@ const location = new mongoose.Schema({
         max: 12,
     },
     month: {
-        type: String,
+        type: Number,
         require: false,
-        min: 3,
-        max: 50,
+        min: 1,
+        max: 12,
     },
     bucketPriority: {
         type: Number,
         require: false,
-        default: -1
+        default: ""
     },
     notes: {
         type: String,

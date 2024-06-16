@@ -38,6 +38,7 @@ export default function Management() {
 
   const [view, setView] = useState();
   const localView = useRef();
+  
 
   let origin = useLocation();
   if (!view) {

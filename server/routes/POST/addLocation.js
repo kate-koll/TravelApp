@@ -27,6 +27,8 @@ addLocation.post("/save-location", (req, res) => {
       } else {
         //if empty result, let's build new location!
         if (!docs && continent && country && city && (visited === true || visited === false)) {
+          keywords.push(country.toLowerCase(), city.toLowerCase(), continent.toLowerCase());
+          if (year) keywords.push(year)
           const location = new modelLocation({
             continent: continent,
             country: country,
@@ -48,7 +50,7 @@ addLocation.post("/save-location", (req, res) => {
               });
             } else {
               return res.json({
-                msg: `saved successfully ${JSON.stringify(document)}`,
+                msg: `saved successfully ${JSON.stringify(document)}`
               });
             }
           });
@@ -57,6 +59,7 @@ addLocation.post("/save-location", (req, res) => {
         else {
           return res.json({
             msg: "already exists or missing one of continent, country, city, visited",
+            res: 0
           });
         }
       }

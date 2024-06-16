@@ -42,8 +42,16 @@ export default function Visited() {
   let sortedDocuments = [];
   const sortDocuments = () => {
     sortedDocuments = documents;
-    sortedDocuments.sort((a, b) =>
-      parseInt(a.year) < parseInt(b.year) ? 1 : -1
+    sortedDocuments.sort((a, b) => {
+      if(parseInt(a.year) < parseInt(b.year)) {return 1};
+      if(parseInt(a.year) > parseInt(b.year)) {return -1};
+      if(a.month < b.month) {return 1}
+      if(a.month > b.month) {return -1}
+      else return 0
+    }
+      
+      
+      // parseInt(a.year) < parseInt(b.year) ? 1 : -1
     );
   };
 

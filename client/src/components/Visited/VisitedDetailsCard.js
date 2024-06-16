@@ -7,6 +7,8 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
+import transformMonth from "../../helpers/transformMonth";
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -43,7 +45,7 @@ const VisitedDetailsCard = (props) => {
           {name}
         </Typography>
         <Typography variant="h5" color="primary.dark">
-          {`${month} ${year}, ${country} — ${city}`}
+          {`${transformMonth(month)} ${year}, ${country} — ${city}`}
         </Typography>
         <Typography variant="body">
           {notes}

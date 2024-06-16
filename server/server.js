@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+require('dotenv').config();
 const PORT = process.env.PORT || 5000;
 const db = require("./database/connect");
 const cors = require("cors");
@@ -8,6 +9,7 @@ const getLocations = require("./routes/GET/getLocations");
 const getLocationById = require("./routes/GET/getLocationById");
 const getVisitedLocations = require("./routes/GET/getVisitedLocations");
 const getBucketLocations = require("./routes/GET/getBucketLocations");
+const getLocationsByCriteria = require("./routes/GET/getLocationsByCriteria")
 
 const addLocation = require("./routes/POST/addLocation");
 const deleteLocation = require("./routes/POST/deleteLocation");
@@ -29,9 +31,10 @@ db.connect();
  * GET ROUTES
  */
 app.use("/locations", cors(), getLocations); // http://localhost:5000/locations/get-locations
-app.use("/locations", cors(), getLocationById); // http://localhost:5000/locations/get-locations/:id
+app.use("/locations", cors(), getLocationById); // http://localhost:5000/locations/get-location/:id
 app.use("/locations", cors(), getVisitedLocations); // http://localhost:5000/locations/get-visited
 app.use("/locations", cors(), getBucketLocations); // http://localhost:5000/locations/get-bucket
+app.use("/locations", cors(), getLocationsByCriteria); // http://localhost:5000/locations/get-locations-by
 
 app.get('/', (req,res)=>{
     res.send("Main page")
