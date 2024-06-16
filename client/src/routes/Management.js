@@ -10,6 +10,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import VisitedTab from "../components/Management/VisitedTab";
 import BucketTab from "../components/Management/BucketTab";
 import BlogTab from "../components/Management/BlogTab";
+import {LoginForm} from "../components/Login/LoginForm";
+
 
 export default function Management() {
   const theme = createTheme({
@@ -37,6 +39,7 @@ export default function Management() {
   });
 
   const [view, setView] = useState();
+  const [token, setToken] = useState();
   const localView = useRef();
   
 
@@ -65,6 +68,12 @@ export default function Management() {
     setView(newValue);
     localView.current = newValue;
   };
+
+  if (!token) {
+    return (
+      <div><LoginForm setToken={setToken}/></div>
+    );
+  }
 
   return (
     <div>
