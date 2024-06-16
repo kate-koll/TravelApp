@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -13,8 +13,13 @@ import CircularProgress from "@mui/material/CircularProgress";
 import FormLabel from "@mui/material/FormLabel";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import Grid from "@mui/material/Grid";
+import { InputAdornment, IconButton } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 export const LoginForm = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
   return (
     <form>
       <Box>
@@ -28,18 +33,36 @@ export const LoginForm = () => {
         </div>
         <div>
           <FormControl sx={{ margin: 1, width: "30%" }}>
-            <TextField name="password" required label="Password" />
+            <TextField
+              type={showPassword ? "text" : "password"}
+              name="password"
+              required
+              label="Password"
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
           </FormControl>
         </div>
       </Box>
       <Button
-          sx={{ margin: 3 }}
-          variant="contained"
-          color="primary"
-          type="submit"
-        >
-          Submit
-        </Button>
+        sx={{ margin: 3 }}
+        variant="contained"
+        color="primary"
+        type="submit"
+      >
+        Submit
+      </Button>
     </form>
   );
 };
